@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>跟单运单</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="rail" aria-label="主模块">
+        <div class="rail-curve"></div>
+        <button class="rail-item" title="首页"><span>⌂</span><b>首页</b></button>
+        <button class="rail-item active" title="单据"><span>▦</span><b>单据</b></button>
+        <button class="rail-item" title="仓库"><span>▣</span><b>仓库</b></button>
+        <button class="rail-item" title="产品"><span>▤</span><b>产品</b></button>
+        <button class="rail-item" title="订单"><span>▥</span><b>订单</b></button>
+        <button class="rail-item" title="财务"><span>◉</span><b>财务</b></button>
+        <button class="rail-item badge" title="询价"><span>?</span><b>询价</b></button>
+        <button class="rail-item" title="配置"><span>⚙</span><b>配置</b></button>
+        <button class="rail-item" title="管理"><span>▧</span><b>管理</b></button>
+        <button class="rail-item" title="导出"><span>↓</span><b>导出</b></button>
+        <button class="rail-item" title="系统"><span>▰</span><b>系统</b></button>
+      </aside>
+
+      <aside class="sidebar" aria-label="业务菜单">
+        <div class="brand">
+          <div class="mark"><span></span></div>
+          <div>
+            <strong>Tiantu</strong>
+            <small>聚焦美英 空运海运专线</small>
+          </div>
+        </div>
+        <nav>
+          <button class="nav-group"><span>▣</span>运单</button>
+          <button class="nav-sub">运单</button>
+          <button class="nav-sub active">跟单运单</button>
+          <button class="nav-sub">业务运单</button>
+          <button class="nav-group"><span>▣</span>提单 <em>⌄</em></button>
+          <button class="nav-group"><span>▣</span>工单 <em>⌄</em></button>
+          <button class="nav-group"><span>▣</span>打单</button>
+          <button class="nav-group"><span>▣</span>预配仓 <em>⌄</em></button>
+          <button class="nav-group"><span>▣</span>预警 <em>⌄</em></button>
+          <button class="nav-sub">协同转入</button>
+          <button class="nav-sub">协同转出</button>
+          <button class="nav-group"><span>▣</span>海外中转单管理</button>
+          <button class="nav-group"><span>▣</span>货件管理 <em>⌄</em></button>
+        </nav>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div class="tab-strip" aria-label="打开页面">
+            <button class="hamburger" title="折叠菜单">☰</button>
+            <button class="back" title="后退">‹</button>
+            <button class="doc-tab">运单 <span>×</span></button>
+            <button class="doc-tab">仓库收货 <span>×</span></button>
+            <button class="doc-tab">仓库出货 <span>×</span></button>
+            <button class="doc-tab">常量管理 <span>×</span></button>
+            <button class="doc-tab">404 <span>×</span></button>
+            <button class="doc-tab">工单 <span>×</span></button>
+            <button class="doc-tab">收件人信息 <span>×</span></button>
+            <button class="doc-tab">问题类别 <span>×</span></button>
+            <button class="doc-tab active">跟单运单 <span>×</span></button>
+            <button class="doc-tab">附加费审核 <span>×</span></button>
+            <button class="doc-tab">货量预警看板 <span>×</span></button>
+          </div>
+          <div class="account">
+            <button title="消息" class="bell">🔔<span>266</span></button>
+            <button title="下载">↓</button>
+            <button class="warehouse">塘厦仓</button>
+            <button>管理员⌄</button>
+          </div>
+        </header>
+
+        <section class="filters" aria-label="查询条件">
+          <label class="field select-field">
+            <span>关键词</span>
+            <select id="keywordType">
+              <option>关键词</option>
+              <option>运单号</option>
+              <option>出货单</option>
+              <option>客户</option>
+            </select>
+          </label>
+          <label class="field keyword-field">
+            <span class="sr-only">查询关键词</span>
+            <input id="keywordInput" type="search" placeholder="输入查询单号，多个用 ';' 隔开" />
+          </label>
+          <label class="field">
+            <span>客户</span>
+            <input id="customerInput" placeholder="客户" />
+          </label>
+          <label class="field">
+            <span>跟单代表</span>
+            <input id="ownerInput" placeholder="跟单代表" />
+          </label>
+          <button class="primary" id="searchBtn">🔍 查询</button>
+          <button class="ghost" id="resetBtn">↻ 重置</button>
+          <button class="ghost" id="expandBtn">⌄ 展开</button>
+          <div class="advanced" id="advancedFilters">
+            <label class="field">
+              <span>国家</span>
+              <select id="countryInput">
+                <option value="">全部</option>
+                <option>美国</option>
+                <option>英国</option>
+                <option>德国</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>仓库代码</span>
+              <input id="warehouseInput" placeholder="例如 ABE2" />
+            </label>
+            <label class="field">
+              <span>申报状态</span>
+              <select id="declareInput">
+                <option value="">全部</option>
+                <option>已上传</option>
+                <option>待上传</option>
+              </select>
+            </label>
+          </div>
+        </section>
+
+        <section class="content-card">
+          <div class="watermark" aria-hidden="true"></div>
+          <div class="status-tabs" id="statusTabs">
+            <button data-status="已下单">已下单(3453)</button>
+            <button class="active" data-status="已收货">已收货(874)</button>
+            <button data-status="已确认">已确认(7)</button>
+            <button data-status="转运中">转运中(14)</button>
+            <button data-status="已签收">已签收(15)</button>
+            <button data-status="退件">退件(8)</button>
+            <button data-status="已取消">已取消(38)</button>
+            <button data-status="全部">全部(4409)</button>
+          </div>
+
+          <div class="actions-row">
+            <div class="left-actions">
+              <div class="dropdown">
+                <button class="blue" data-menu="moreMenu">▦ 其他⌄</button>
+                <div class="menu" id="moreMenu">
+                  <button data-action="标记重点">标记重点</button>
+                  <button data-action="批量备注">批量备注</button>
+                  <button data-action="复制运单号">复制运单号</button>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="blue" data-menu="printMenu">🏷 打印标签⌄</button>
+                <div class="menu" id="printMenu">
+                  <button data-action="打印亚马逊标签">打印亚马逊标签</button>
+                  <button data-action="打印外箱标签">打印外箱标签</button>
+                </div>
+              </div>
+              <div class="dropdown">
+                <button class="blue" data-menu="batchMenu">▧ 批量操作⌄</button>
+                <div class="menu" id="batchMenu">
+                  <button data-action="批量上传附件">批量上传附件</button>
+                  <button data-action="批量修改仓库">批量修改仓库</button>
+                  <button data-action="批量导出申报">批量导出申报</button>
+                </div>
+              </div>
+              <button class="blue" id="exportBtn">↓ 导出⌄</button>
+              <div class="dropdown">
+                <button class="blue" data-menu="addBatchMenu">▣ 批量添加⌄</button>
+                <div class="menu" id="addBatchMenu">
+                  <button data-action="批量添加运单">批量添加运单</button>
+                  <button id="batchChargeWeightBtn" type="button">批量修改收费重</button>
+                </div>
+              </div>
+              <button class="blue" id="statsBtn">查看统计</button>
+              <button class="blue" id="logBtn">查看日志</button>
+              <button class="blue" id="printMergeBtn">打印入仓单</button>
+              <button class="blue" id="syncBtn">同步FBA</button>
+            </div>
+            <div class="right-actions">
+              <button class="danger" id="mismatchBtn">不匹配待处理（117）</button>
+              <button class="blue" id="quickOrderBtn">快捷下单</button>
+              <button class="ghost" id="excelOrderBtn">Excel导入下单</button>
+              <button class="blue" id="parseOrderBtn">解析发票下单(新版)</button>
+              <button class="gear" id="columnBtn" title="列设置">⚙</button>
+            </div>
+          </div>
+
+          <div class="selection-bar" id="selectionBar">
+            已选择 <strong id="selectedCount">0</strong> 条
+            <button id="clearSelection">清空</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th class="check"><input id="selectAll" type="checkbox" /></th>
+                  <th>运单号</th>
+                  <th>最新运踪</th>
+                  <th>最新运踪时间</th>
+                  <th>出货单</th>
+                  <th>集团单号</th>
+                  <th>客户</th>
+                  <th>客户类型</th>
+                  <th>服务</th>
+                  <th>国家</th>
+                  <th>件数</th>
+                  <th>申报价值</th>
+                  <th>申报币种</th>
+                  <th>实重</th>
+                  <th>材积重</th>
+                  <th>收费重</th>
+                  <th>仓库代码</th>
+                  <th>申报</th>
+                  <th>附件</th>
+                  <th>是否购买国内查验金</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+
+          <footer class="pagination">
+            <span id="totalText">共 874 条</span>
+            <select id="pageSize">
+              <option value="10">100条/页</option>
+              <option value="7">70条/页</option>
+              <option value="20">200条/页</option>
+            </select>
+            <button id="prevPage">‹</button>
+            <div id="pageButtons" class="page-buttons"></div>
+            <button id="nextPage">›</button>
+            <label>前往 <input id="jumpPage" type="number" min="1" value="1" /> 页</label>
+          </footer>
+        </section>
+      </main>
+    </div>
+
+    <div class="float-tools">
+      <button title="快捷入口">▦</button>
+      <button title="语言">文</button>
+    </div>
+
+    <dialog id="infoDialog">
+      <form method="dialog" class="dialog-card">
+        <header>
+          <strong id="dialogTitle">查看统计</strong>
+          <button value="close">×</button>
+        </header>
+        <div id="dialogBody"></div>
+        <footer id="dialogFooter">
+          <button class="primary" value="close">确定</button>
+        </footer>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
