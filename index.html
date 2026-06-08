@@ -159,6 +159,7 @@
                   <button data-action="批量上传附件">批量上传附件</button>
                   <button data-action="批量修改仓库">批量修改仓库</button>
                   <button data-action="批量导出申报">批量导出申报</button>
+                  <button id="batchChargeWeightBtn" type="button">批量申请收费重</button>
                 </div>
               </div>
               <button class="blue" id="exportBtn">↓ 导出⌄</button>
@@ -166,7 +167,6 @@
                 <button class="blue" data-menu="addBatchMenu">▣ 批量添加⌄</button>
                 <div class="menu" id="addBatchMenu">
                   <button data-action="批量添加运单">批量添加运单</button>
-                  <button id="batchChargeWeightBtn" type="button">批量修改收费重</button>
                 </div>
               </div>
               <button class="blue" id="statsBtn">查看统计</button>
@@ -197,6 +197,7 @@
                   <th>最新运踪</th>
                   <th>最新运踪时间</th>
                   <th>出货单</th>
+                  <th>附加费申请</th>
                   <th>集团单号</th>
                   <th>客户</th>
                   <th>客户类型</th>
@@ -253,6 +254,7 @@
     </dialog>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
