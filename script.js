@@ -442,58 +442,13 @@ function applyChargeWeightImport() {
   showToast(`已导入 ${targetIds.size} 条运单收费重明细`);
 }
 
-async function downloadChargeWeightTemplate() {
-  const ExcelJS = window.ExcelJS;
-  if (!ExcelJS) {
-    showToast("ExcelJS 加载中，请稍后再试");
-    return;
-  }
-
-  const wb = new ExcelJS.Workbook();
-  const ws = wb.addWorksheet("收费重模板");
-
-  ws.columns = [
-    { header: "运单号", key: "waybill", width: 22 },
-    { header: "原收费重", key: "origin", width: 14 },
-    { header: "申请收费重", key: "target", width: 14 },
-  ];
-
-  const headerRow = ws.getRow(1);
-  headerRow.height = 24;
-  headerRow.font = { name: "微软雅黑", size: 11, bold: true };
-  headerRow.alignment = { vertical: "middle", horizontal: "center" };
-
-  const requiredCols = [1, 2, 3];
-  requiredCols.forEach((col) => {
-    const cell = headerRow.getCell(col);
-    cell.value = { richText: [{ font: { color: { argb: "FFFF0000" }, name: "微软雅黑", size: 11, bold: true }, text: "*" }, { font: { name: "微软雅黑", size: 11, bold: true }, text: String(cell.value) }] };
-  });
-
-  const row2 = ws.addRow(["USSZ202606050034", "257.04", "257.04"]);
-  row2.font = { name: "微软雅黑", size: 11 };
-  row2.alignment = { vertical: "middle", horizontal: "center" };
-
-  ws.eachRow((row) => {
-    row.eachCell((cell) => {
-      cell.border = {
-        top: { style: "thin" },
-        left: { style: "thin" },
-        bottom: { style: "thin" },
-        right: { style: "thin" },
-      };
-    });
-  });
-
-  const buf = await wb.xlsx.writeBuffer();
-  const blob = new Blob([buf], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
-  const url = URL.createObjectURL(blob);
+function downloadChargeWeightTemplate() {
   const link = document.createElement("a");
-  link.href = url;
+  link.href = "批量申请收费重.xlsx";
   link.download = "批量申请收费重.xlsx";
   document.body.append(link);
   link.click();
   link.remove();
-  URL.revokeObjectURL(url);
   showToast("已下载导入模板");
 }
 
