@@ -21,7 +21,10 @@ const rows = [
     attachment: "运输信息模板.xls",
     insured: "否",
     status: "已收货",
-    surcharge: "原:1942.00, 现1894.00"
+    surcharge: {
+      text: "原:1942.00, 现1894.00",
+      auditStatus: "pending"
+    }
   },
   {
     id: 50029,
@@ -45,7 +48,10 @@ const rows = [
     attachment: "运输信息模板.xls",
     insured: "否",
     status: "已收货",
-    surcharge: "原:1942.00, 现1894.00"
+    surcharge: {
+      text: "原:1942.00, 现1894.00",
+      auditStatus: "approved"
+    }
   },
   {
     id: 50026,
@@ -69,7 +75,10 @@ const rows = [
     attachment: "运输信息模板.xls",
     insured: "否",
     status: "已收货",
-    surcharge: "原:1942.00, 现1894.00"
+    surcharge: {
+      text: "原:1942.00, 现1894.00",
+      auditStatus: "rejected"
+    }
   },
   {
     id: 50027,
@@ -93,7 +102,7 @@ const rows = [
     attachment: "运输信息模板.xls",
     insured: "否",
     status: "已收货",
-    surcharge: "原:1942.00, 现1894.00"
+    surcharge: null
   },
   {
     id: 50028,
@@ -117,7 +126,10 @@ const rows = [
     attachment: "运输信息模板.xls",
     insured: "否",
     status: "已收货",
-    surcharge: "原:1942.00, 现1894.00"
+    surcharge: {
+      text: "原:1942.00, 现1894.00",
+      auditStatus: "pending"
+    }
   },
   {
     id: 50024,
@@ -141,7 +153,10 @@ const rows = [
     attachment: "运输信息模板.xls",
     insured: "否",
     status: "已收货",
-    surcharge: "原:1942.00, 现1894.00"
+    surcharge: {
+      text: "原:1942.00, 现1894.00",
+      auditStatus: "approved"
+    }
   },
   {
     id: 50021,
@@ -165,7 +180,10 @@ const rows = [
     attachment: "运输信息模板.xls",
     insured: "否",
     status: "已收货",
-    surcharge: "原:1942.00, 现1894.00"
+    surcharge: {
+      text: "原:1942.00, 现1894.00",
+      auditStatus: "rejected"
+    }
   },
   {
     id: 50020,
@@ -190,7 +208,7 @@ const rows = [
     insured: "否",
     status: "已收货",
     highlight: true,
-    surcharge: "原:1942.00, 现1894.00"
+    surcharge: null
   },
   {
     id: 50018,
@@ -214,7 +232,10 @@ const rows = [
     attachment: "运输信息模板.xls",
     insured: "否",
     status: "已下单",
-    surcharge: "原:1942.00, 现1894.00"
+    surcharge: {
+      text: "原:1942.00, 现1894.00",
+      auditStatus: "pending"
+    }
   },
   {
     id: 50017,
@@ -238,7 +259,10 @@ const rows = [
     attachment: "运输信息模板.xls",
     insured: "否",
     status: "转运中",
-    surcharge: "原:1942.00, 现1894.00"
+    surcharge: {
+      text: "原:1942.00, 现1894.00",
+      auditStatus: "approved"
+    }
   }
 ];
 
@@ -262,6 +286,36 @@ const dialog = document.querySelector("#infoDialog");
 const dialogTitle = document.querySelector("#dialogTitle");
 const dialogBody = document.querySelector("#dialogBody");
 const dialogFooter = document.querySelector("#dialogFooter");
+
+const surchargeStatusMap = {
+  pending: {
+    className: "pending",
+    label: "财务未审核"
+  },
+  approved: {
+    className: "approved",
+    label: "审核通过"
+  },
+  rejected: {
+    className: "rejected",
+    label: "审核失败"
+  }
+};
+
+function renderSurcharge(surcharge) {
+  if (!surcharge) return "";
+
+  const detail = typeof surcharge === "string" ? surcharge : surcharge.text;
+  const statusKey = typeof surcharge === "string" ? "pending" : surcharge.auditStatus;
+  const status = surchargeStatusMap[statusKey] || surchargeStatusMap.pending;
+
+  return `
+    <div class="surcharge-apply surcharge-apply--${status.className}">
+      <span>${status.label}</span>
+      <strong>${detail || ""}</strong>
+    </div>
+  `;
+}
 
 function getFilters() {
   return {
@@ -321,7 +375,7 @@ function renderTable() {
           <td>${row.track}</td>
           <td>${row.time}</td>
           <td>${row.outbound}</td>
-          <td>${row.surcharge || ""}</td>
+          <td>${renderSurcharge(row.surcharge)}</td>
           <td>${row.group}</td>
           <td>${row.customer}</td>
           <td>${row.type}</td>

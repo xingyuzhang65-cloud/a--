@@ -643,7 +643,7 @@ td:nth-child(5) {
 
 th:nth-child(6),
 td:nth-child(6) {
-  width: 140px;
+  width: 158px;
 }
 
 th:nth-child(7),
@@ -747,6 +747,48 @@ td:nth-child(21) {
 
 .file-link:hover {
   text-decoration: underline;
+}
+
+.surcharge-apply {
+  display: inline-grid;
+  max-width: 100%;
+  gap: 4px;
+  padding: 6px 8px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  line-height: 1.25;
+  text-align: left;
+  white-space: normal;
+}
+
+.surcharge-apply span {
+  font-weight: 700;
+  font-size: 12px;
+}
+
+.surcharge-apply strong {
+  overflow-wrap: anywhere;
+  color: inherit;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.surcharge-apply--pending {
+  border-color: #f2c94c;
+  background: #fff8df;
+  color: #9a6400;
+}
+
+.surcharge-apply--approved {
+  border-color: #7ccf8b;
+  background: #eaf8ee;
+  color: #16733a;
+}
+
+.surcharge-apply--rejected {
+  border-color: #f19a9a;
+  background: #fff0f0;
+  color: #b42318;
 }
 
 .pagination {
