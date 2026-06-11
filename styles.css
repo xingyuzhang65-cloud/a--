@@ -643,7 +643,7 @@ td:nth-child(5) {
 
 th:nth-child(6),
 td:nth-child(6) {
-  width: 158px;
+  width: 230px;
 }
 
 th:nth-child(7),
@@ -749,46 +749,49 @@ td:nth-child(21) {
   text-decoration: underline;
 }
 
-.surcharge-apply {
-  display: inline-grid;
+.surcharge-list {
+  display: grid;
+  max-height: 96px;
   max-width: 100%;
-  gap: 4px;
-  padding: 6px 8px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  line-height: 1.25;
+  gap: 3px;
+  overflow-y: auto;
+  padding: 1px 2px;
   text-align: left;
   white-space: normal;
 }
 
-.surcharge-apply span {
-  font-weight: 700;
-  font-size: 12px;
+.surcharge-list::-webkit-scrollbar {
+  width: 5px;
 }
 
-.surcharge-apply strong {
+.surcharge-list::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #a4acb8;
+}
+
+.surcharge-item {
+  display: grid;
+  align-items: baseline;
+  line-height: 1.35;
+}
+
+.surcharge-item strong {
   overflow-wrap: anywhere;
   color: inherit;
   font-size: 12px;
   font-weight: 600;
 }
 
-.surcharge-apply--pending {
-  border-color: #f2c94c;
-  background: #fff8df;
-  color: #9a6400;
+.surcharge-item--pending {
+  color: #e87900;
 }
 
-.surcharge-apply--approved {
-  border-color: #7ccf8b;
-  background: #eaf8ee;
-  color: #16733a;
+.surcharge-item--approved {
+  color: #00a020;
 }
 
-.surcharge-apply--rejected {
-  border-color: #f19a9a;
-  background: #fff0f0;
-  color: #b42318;
+.surcharge-item--rejected {
+  color: #d4380d;
 }
 
 .pagination {

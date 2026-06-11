@@ -21,10 +21,28 @@ const rows = [
     attachment: "运输信息模板.xls",
     insured: "否",
     status: "已收货",
-    surcharge: {
-      text: "原:1942.00, 现1894.00",
-      auditStatus: "pending"
-    }
+    surcharge: [
+      {
+        text: "基础运费 982.8 CNY（11.7KG）",
+        auditStatus: "approved"
+      },
+      {
+        text: "客户调价 -42 CNY（-0.5/KG）",
+        auditStatus: "pending"
+      },
+      {
+        text: "报关费 350 CNY",
+        auditStatus: "rejected"
+      },
+      {
+        text: "清关费 200 CNY",
+        auditStatus: "pending"
+      },
+      {
+        text: "其他 30 CNY",
+        auditStatus: "pending"
+      }
+    ]
   },
   {
     id: 50029,
@@ -289,32 +307,47 @@ const dialogFooter = document.querySelector("#dialogFooter");
 
 const surchargeStatusMap = {
   pending: {
-    className: "pending",
-    label: "财务未审核"
+    className: "pending"
   },
   approved: {
-    className: "approved",
-    label: "审核通过"
+    className: "approved"
   },
   rejected: {
-    className: "rejected",
-    label: "审核失败"
+    className: "rejected"
   }
 };
 
 function renderSurcharge(surcharge) {
-  if (!surcharge) return "";
-
-  const detail = typeof surcharge === "string" ? surcharge : surcharge.text;
-  const statusKey = typeof surcharge === "string" ? "pending" : surcharge.auditStatus;
-  const status = surchargeStatusMap[statusKey] || surchargeStatusMap.pending;
+  const items = normalizeSurchargeItems(surcharge);
+  if (!items.length) return "";
 
   return `
-    <div class="surcharge-apply surcharge-apply--${status.className}">
-      <span>${status.label}</span>
-      <strong>${detail || ""}</strong>
+    <div class="surcharge-list">
+      ${items
+        .map((item) => {
+          const status = surchargeStatusMap[item.auditStatus] || surchargeStatusMap.pending;
+          return `
+            <div class="surcharge-item surcharge-item--${status.className}">
+              <strong>${item.text || ""}</strong>
+            </div>
+          `;
+        })
+        .join("")}
     </div>
   `;
+}
+
+function normalizeSurchargeItems(surcharge) {
+  if (!surcharge) return [];
+  if (Array.isArray(surcharge)) return surcharge.flatMap(normalizeSurchargeItems);
+  if (typeof surcharge === "string") return [{ text: surcharge, auditStatus: "pending" }];
+  if (Array.isArray(surcharge.items)) return normalizeSurchargeItems(surcharge.items);
+  return [
+    {
+      text: surcharge.text || surcharge.detail || "",
+      auditStatus: surcharge.auditStatus || "pending"
+    }
+  ];
 }
 
 function getFilters() {
